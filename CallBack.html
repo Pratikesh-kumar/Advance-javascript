@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let posts=[{title: "one post" , body: "this is post one", createdate: new Date().getTime()},
+{title: "second post" , body: "this is post second", createdate: new Date().getTime()}]
+ 
+let intervalId =0;
+function getpost(){
+    clearInterval(intervalId);
+   intervalId= setInterval(() => {
+    setTimeout( ()=>{
+        let output=''
+        posts.forEach((post)=>{
+            output+=`<li>${post.title} - last updated ${(new Date().getTime() - post.createdate)/1000}</li>`
+        } )
+       document.body.innerHTML=output;
+    },2000);
+},1000)
+}
+getpost();
+
+
+
+function createpost(post,callback){
+    setTimeout(()=>{
+        posts.push({...post,createdate:new Date().getTime()});
+        callback();
+    },1000)
+}
+
+
+
+
+function create4post(post,callback){
+    setTimeout(()=>{
+        posts.push({...post,createdate:new Date().getTime()});
+        callback()
+    },8000)
+}
+createpost({title: "third one ", body: "this is third one"},getpost)
+
+create4post({title: "fourth one ", body: "this is forth one"},getpost);
+
+
+
+    </script>
+</body>
+</html>
